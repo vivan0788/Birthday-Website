@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
       progress = 100;
       clearInterval(loadingInterval);
       setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        loadingScreen.style.visibility = 'hidden';
+        if (loadingScreen) {
+          loadingScreen.style.opacity = '0';
+          loadingScreen.style.visibility = 'hidden';
+        }
       }, 400);
     }
     if (progressFill) progressFill.style.width = `${progress}%`;
@@ -22,10 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* --- 2. Canvas Particle & Firework Engine --- */
   const canvas = document.getElementById('fireworks-canvas');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas ? canvas.getContext('2d') : null;
   let particles = [];
 
   function resizeCanvas() {
+    if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
@@ -47,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     draw() {
+      if (!ctx) return;
       ctx.save();
       ctx.globalAlpha = this.alpha;
       ctx.beginPath();
@@ -75,23 +79,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function animateCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((particle, index) => {
-      if (particle.alpha <= 0) {
-        particles.splice(index, 1);
-      } else {
-        particle.update();
-        particle.draw();
-      }
-    });
+    if (ctx && canvas) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((particle, index) => {
+        if (particle.alpha <= 0) {
+          particles.splice(index, 1);
+        } else {
+          particle.update();
+          particle.draw();
+        }
+      });
+    }
     requestAnimationFrame(animateCanvas);
   }
   animateCanvas();
 
   function triggerCelebration() {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * (canvas.height * 0.5);
-    createBurst(x, y);
+    if (canvas) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * (canvas.height * 0.5);
+      createBurst(x, y);
+    }
     if (typeof confetti === 'function') {
       confetti({
         particleCount: 80,
@@ -101,20 +109,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* --- 3. Music Player Engine --- */
+  /* --- 3. Music Player & First Touch Autoplay Fix --- */
   const musicBtn = document.getElementById('music-btn');
   const musicIcon = document.getElementById('music-icon');
   const bgMusic = document.getElementById('bg-music');
   let isPlaying = false;
 
+  // पहली बार स्क्रीन पर टच/क्लिक होते ही गाना चालू करने का फंक्शन
+  function startMusicOnFirstTouch() {
+    if (!isPlaying && bgMusic) {
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        if (musicIcon) musicIcon.innerText = '⏸️';
+      }).catch(err => {
+        console.log("Autoplay waiting for user gesture:", err);
+      });
+    }
+    document.removeEventListener('click', startMusicOnFirstTouch);
+    document.removeEventListener('touchstart', startMusicOnFirstTouch);
+  }
+
+  document.addEventListener('click', startMusicOnFirstTouch);
+  document.addEventListener('touchstart', startMusicOnFirstTouch);
+
+  // म्यूज़िक बटन से प्ले/पॉज़ करने का लॉजिक
   if (musicBtn && bgMusic) {
-    musicBtn.addEventListener('click', () => {
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // टच इवेंट रिपीट न हो
       if (isPlaying) {
         bgMusic.pause();
-        musicIcon.innerText = '🎵';
+        if (musicIcon) musicIcon.innerText = '🎵';
       } else {
         bgMusic.play().catch(() => {});
-        musicIcon.innerText = '⏸️';
+        if (musicIcon) musicIcon.innerText = '⏸️';
       }
       isPlaying = !isPlaying;
     });
