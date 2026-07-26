@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 18th Birthday Shyam! 🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <canvas id="fireworks-canvas"></canvas>
+  <div id="floating-elements-container"></div>
+
+  <div id="loading-screen">
+    <div class="loader-content">
+      <div class="animated-logo">🎂</div>
+      <h2>Preparing something special for Shyam...</h2>
+      <div class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+      <p id="progress-text">0%</p>
+    </div>
+  </div>
+
+  <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73132.mp3?filename=happy-birthday-155280.mp3"></audio>
+
+  <button id="music-btn" title="Toggle Music">
+    <span id="music-icon">🎵</span>
+  </button>
+
+  <main id="main-content">
+
+    <section class="hero-section">
+      <div class="glass-card hero-card">
+        <h1 class="glow-text">🎉 Happy 18th Birthday, Shyam! 🎉</h1>
+        <p class="subtitle">May this year bring happiness, success, great memories, and endless smiles.</p>
+        
+        <div class="countdown-container">
+          <div id="countdown-timer">
+            <div class="time-box"><span id="days">00</span><p>Days</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+            <div class="time-box"><span id="minutes">00</span><p>Minutes</p></div>
+            <div class="time-box"><span id="seconds">00</span><p>Seconds</p></div>
+          </div>
+          <h2 id="birthday-msg" class="hidden glow-text">🎉 HAPPY BIRTHDAY SHYAM! 🎉</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="cake-section">
+      <div class="glass-card">
+        <h2>Make a Wish & Blow the Candles!</h2>
+        <div class="cake" id="cake">
+          <div class="plate"></div>
+          <div class="layer layer-bottom"></div>
+          <div class="layer layer-middle"></div>
+          <div class="layer layer-top"></div>
+          <div class="icing"></div>
+          <div class="candle" id="candle">
+            <div class="flame" id="flame"></div>
+          </div>
+        </div>
+        <button id="blow-btn" class="btn">Blow Candles 🕯️</button>
+      </div>
+    </section>
+
+    <section class="letter-section">
+      <h2>A Special Letter For You</h2>
+      <div class="envelope-wrapper">
+        <div class="envelope" id="envelope">
+          <div class="front flap"></div>
+          <div class="front pocket"></div>
+          <div class="letter">
+            <div class="letter-text" id="letter-text"></div>
+          </div>
+        </div>
+      </div>
+      <p class="tap-hint">Tap the envelope to open</p>
+    </section>
+
+    <section class="gallery-section">
+      <h2>Memory Lane 📸</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item glass-card"><img src="https://picsum.photos/400/400?random=1" alt="Memory 1"><div class="overlay">Great Times</div></div>
+        <div class="gallery-item glass-card"><img src="https://picsum.photos/400/400?random=2" alt="Memory 2"><div class="overlay">Fun Moments</div></div>
+        <div class="gallery-item glass-card"><img src="https://picsum.photos/400/400?random=3" alt="Memory 3"><div class="overlay">Adventures</div></div>
+        <div class="gallery-item glass-card"><img src="https://picsum.photos/400/400?random=4" alt="Memory 4"><div class="overlay">Best Friend</div></div>
+      </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close-lightbox">&times;</span>
+      <img class="lightbox-content" id="lightbox-img" alt="Enlarged Memory">
+    </div>
+
+    <section class="timeline-section">
+      <h2>Journey to 18 ✨</h2>
+      <div class="timeline">
+        <div class="timeline-item left">
+          <div class="glass-card timeline-content">
+            <h3>Childhood</h3>
+            <p>Full of innocence, laughter, and endless curiosity.</p>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="glass-card timeline-content">
+            <h3>School Days</h3>
+            <p>Making lifelong friends, learning lessons, and creating unforgettable memories.</p>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="glass-card timeline-content">
+            <h3>Best Memories</h3>
+            <p>Late night chats, crazy adventures, and non-stop laughter.</p>
+          </div>
+        </div>
+        <div class="timeline-item right">
+          <div class="glass-card timeline-content">
+            <h3>Turning 18</h3>
+            <p>Stepping into adulthood with big dreams and infinite possibilities!</p>
+          </div>
+        </div>
+        <div class="timeline-item left">
+          <div class="glass-card timeline-content">
+            <h3>Bright Future</h3>
+            <p>The best is yet to come. Keep shining bright!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wishes-section">
+      <h2>Wishes Wall 🌟</h2>
+      <div class="wishes-grid">
+        <div class="glass-card wish-card">✨ Stay happy always.</div>
+        <div class="glass-card wish-card">🎂 Dream big.</div>
+        <div class="glass-card wish-card">🚀 Keep achieving success.</div>
+        <div class="glass-card wish-card">❤️ May all your wishes come true.</div>
+        <div class="glass-card wish-card">🌟 Have an unforgettable birthday.</div>
+      </div>
+    </section>
+
+    <section class="gift-section">
+      <h2>Your Surprise Gift 🎁</h2>
+      <div class="gift-box" id="gift-box">
+        <div class="gift-lid"></div>
+        <div class="gift-body"></div>
+        <div class="ribbon"></div>
+      </div>
+      <div id="gift-modal" class="modal">
+        <div class="modal-content glass-card">
+          <span class="close-modal">&times;</span>
+          <h2>🎁 Surprise!</h2>
+          <p>"You are one of the best friends anyone could ask for. Happy Birthday, Shyam!"</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-section">
+      <div class="glass-card">
+        <h2 class="glow-text">🎉 Happy 18th Birthday, Shyam! 🎉</h2>
+        <p>"May every dream you have become reality. Have the most wonderful year ahead."</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with ❤️ by Avinash</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+            </html>
